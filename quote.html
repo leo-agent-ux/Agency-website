@@ -2,54 +2,139 @@
 <html>
 <head>
   <title>Build Your Website</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <nav>
   <a href="index.html">Home</a>
   <a href="services.html">Services</a>
   <a href="pricing.html">Pricing</a>
-  <a href="quote.html">Build Quote</a>
-  <a href="portfolio.html">Portfolio</a>
-  <a href="contact.html">Contact</a>
+  <a href="quote.html">Quote</a>
 </nav>
 
 <div class="container">
 
-  <h1>Build Your Website Package</h1>
+  <h1 style="font-size:34px; font-weight:500;">Build your website</h1>
+  <p style="color:#a1a1aa;">Step-by-step estimate builder</p>
 
-  <div class="card">
+  <!-- PROGRESS -->
+  <div style="height:6px; background:#1f1f2a; border-radius:999px; margin:25px 0;">
+    <div id="progress" style="height:6px; width:25%; background:white; border-radius:999px;"></div>
+  </div>
 
-    <label>Website Type</label>
-    <select id="type">
-      <option value="30">Basic Website</option>
-      <option value="60">Business Website</option>
-      <option value="90">Booking Website</option>
-    </select>
+  <!-- STEP BOX -->
+  <div class="card" id="stepBox">
 
-    <label>Domain</label>
-    <select id="domain">
-      <option value="0">No Domain</option>
-      <option value="10">Custom Domain</option>
-    </select>
+    <h2 id="stepTitle">Step 1 — Website Type</h2>
+    <p id="stepDesc">Choose the type of website you want</p>
 
-    <label>Extras</label>
-    <select id="extras">
-      <option value="0">None</option>
-      <option value="20">Logo Design</option>
-      <option value="30">SEO Setup</option>
-    </select>
+    <div id="stepContent"></div>
 
-    <button class="btn" onclick="calculate()">Get Estimate</button>
-
-    <h2 id="result"></h2>
+    <button class="btn" onclick="nextStep()" style="margin-top:15px;">
+      Next
+    </button>
 
   </div>
 
+  <h2 id="result" style="margin-top:20px;"></h2>
+
 </div>
 
-<script src="script.js"></script>
+<script>
+let step = 1;
+
+let values = {
+  type: 0,
+  features: 0,
+  extras: 0
+};
+
+function renderStep() {
+  let content = document.getElementById("stepContent");
+  let title = document.getElementById("stepTitle");
+  let desc = document.getElementById("stepDesc");
+  let progress = document.getElementById("progress");
+
+  if (step === 1) {
+    title.innerText = "Step 1 — Website Type";
+    desc.innerText = "Choose your main website type";
+
+    content.innerHTML = `
+      <select id="typeSelect">
+        <option value="80">Business Website</option>
+        <option value="120">Booking Website</option>
+        <option value="60">Landing Page</option>
+      </select>
+    `;
+
+    progress.style.width = "33%";
+  }
+
+  if (step === 2) {
+    title.innerText = "Step 2 — Features";
+    desc.innerText = "What features do you need?";
+
+    content.innerHTML = `
+      <select id="featureSelect">
+        <option value="0">Basic</option>
+        <option value="25">Contact Form</option>
+        <option value="45">WhatsApp + Contact</option>
+      </select>
+    `;
+
+    progress.style.width = "66%";
+  }
+
+  if (step === 3) {
+    title.innerText = "Step 3 — Extras";
+    desc.innerText = "Optional upgrades";
+
+    content.innerHTML = `
+      <select id="extraSelect">
+        <option value="0">None</option>
+        <option value="30">SEO Setup</option>
+        <option value="60">Full Branding</option>
+      </select>
+    `;
+
+    progress.style.width = "100%";
+  }
+
+  if (step === 4) {
+    document.getElementById("stepBox").style.display = "none";
+
+    let total =
+      values.type + values.features + values.extras;
+
+    document.getElementById("result").innerHTML =
+      "Estimated Project Cost: £" + total + 
+      "<br><br><button class='btn'>Request This Website</button>";
+  }
+}
+
+function nextStep() {
+
+  if (step === 1) {
+    values.type = +document.getElementById("typeSelect").value;
+  }
+
+  if (step === 2) {
+    values.features = +document.getElementById("featureSelect").value;
+  }
+
+  if (step === 3) {
+    values.extras = +document.getElementById("extraSelect").value;
+  }
+
+  step++;
+  renderStep();
+}
+
+renderStep();
+</script>
 
 </body>
 </html>

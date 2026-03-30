@@ -2,7 +2,9 @@
 <html>
 <head>
 <link rel="stylesheet" href="style.css">
+<script defer src="script.js"></script>
 </head>
+
 <body>
 
 <div class="nav">
@@ -19,43 +21,139 @@
 
 <div class="container">
 
-<h1>Project Quote</h1>
-<p>Tell us about your project — we only take serious builds.</p>
+<h1>Project Builder</h1>
+<p>Build your project step-by-step. This helps us create a precise proposal.</p>
 
-<form action="https://formspree.io/f/mlgoblln" method="POST">
+<form id="quoteForm" action="https://formspree.io/f/mlgoblln" method="POST">
 
+<!-- STEP 1 -->
 <div class="card">
-<h2>Business Info</h2>
+<h2>Step 1 — Business Context</h2>
 <input name="business" placeholder="Business Name" required>
 <input name="industry" placeholder="Industry">
-<input name="email" placeholder="Email" required>
+<input name="goal" placeholder="Main Goal (leads, sales, bookings)">
+<input name="website" placeholder="Existing Website (if any)">
+<input name="competitors" placeholder="Competitors (optional)">
 </div>
 
+<!-- STEP 2 -->
 <div class="card">
-<h2>Project Type</h2>
-<select name="type">
+<h2>Step 2 — Website Type</h2>
+<select name="type" id="type">
 <option>Business Website</option>
 <option>E-commerce</option>
 <option>Booking System</option>
 <option>SaaS</option>
+<option>Portfolio</option>
+<option>Landing Page</option>
 </select>
 </div>
 
+<!-- STEP 3 -->
 <div class="card">
-<h2>Goals</h2>
-<select name="goal">
-<option>More leads</option>
-<option>More sales</option>
-<option>Brand upgrade</option>
+<h2>Step 3 — Design Direction</h2>
+<select name="style" id="style">
+<option>Minimal & Clean</option>
+<option>Luxury & Premium</option>
+<option>Bold & Modern</option>
+<option>Corporate</option>
+</select>
+
+<input name="references" placeholder="Reference websites">
+
+<select name="animations" id="animations">
+<option>No animations</option>
+<option>Basic animations</option>
+<option>High-end smooth animations</option>
 </select>
 </div>
 
+<!-- STEP 4 -->
 <div class="card">
-<h2>Details</h2>
-<textarea name="details" rows="6"></textarea>
+<h2>Step 4 — Features</h2>
+
+<h3>Core</h3>
+<label><input type="checkbox" value="Contact Forms"> Contact Forms</label><br>
+<label><input type="checkbox" value="Booking System"> Booking System</label><br>
+<label><input type="checkbox" value="Payments"> Payments</label><br>
+
+<h3>Advanced</h3>
+<label><input type="checkbox" value="Admin Dashboard"> Admin Dashboard</label><br>
+<label><input type="checkbox" value="Login System"> Login System</label><br>
+<label><input type="checkbox" value="CMS"> CMS</label><br>
+
+<h3>Growth</h3>
+<label><input type="checkbox" value="SEO"> SEO Setup</label><br>
+<label><input type="checkbox" value="Analytics"> Analytics</label><br>
+<label><input type="checkbox" value="Email Automation"> Email Automation</label><br>
+<label><input type="checkbox" value="WhatsApp"> WhatsApp Integration</label><br>
+
 </div>
 
-<button class="btn">Submit Request</button>
+<!-- STEP 5 -->
+<div class="card">
+<h2>Step 5 — Business Growth Goals</h2>
+
+<select id="growth">
+<option>Leads</option>
+<option>Sales</option>
+<option>Bookings</option>
+<option>Branding</option>
+</select>
+
+<input id="target" placeholder="Monthly target (optional)">
+<input id="urgency" placeholder="Urgency (e.g. ASAP / 1 month)">
+</div>
+
+<!-- STEP 6 -->
+<div class="card">
+<h2>Step 6 — Content</h2>
+
+<select id="content">
+<option>I have everything</option>
+<option>I need help</option>
+<option>I need full copywriting</option>
+</select>
+
+</div>
+
+<!-- STEP 7 -->
+<div class="card">
+<h2>Step 7 — Timeline</h2>
+
+<select id="timeline">
+<option>Rush</option>
+<option>Standard</option>
+<option>Flexible</option>
+</select>
+
+</div>
+
+<!-- STEP 8 -->
+<div class="card">
+<h2>Step 8 — Extra Services</h2>
+
+<label><input type="checkbox" value="SEO Package"> SEO Setup</label><br>
+<label><input type="checkbox" value="Branding Kit"> Branding Kit</label><br>
+<label><input type="checkbox" value="Logo Design"> Logo Design</label><br>
+<label><input type="checkbox" value="Hosting"> Hosting Setup</label><br>
+<label><input type="checkbox" value="Maintenance"> Maintenance Plan</label><br>
+<label><input type="checkbox" value="Marketing"> Marketing Strategy</label><br>
+
+</div>
+
+<!-- STEP 9 -->
+<div class="card">
+<h2>Step 9 — Summary</h2>
+
+<p id="summaryText">Your project summary will appear here.</p>
+<p id="priceEstimate"></p>
+<p id="complexity"></p>
+
+<button type="button" class="btn" onclick="generateSummary()">Generate Summary</button>
+<button type="submit" class="btn">Proceed to Submit</button>
+
+</div>
 
 </form>
 

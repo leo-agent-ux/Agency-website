@@ -1,10 +1,17 @@
-function calculate() {
-  let type = parseInt(document.getElementById("type").value);
-  let domain = parseInt(document.getElementById("domain").value);
-  let extras = parseInt(document.getElementById("extras").value);
+const elements = document.querySelectorAll(".card, h1, h2, p, .btn");
 
-  let total = type + domain + extras;
-
-  document.getElementById("result").innerText =
-    "Estimated Price: £" + total;
+const observer = new IntersectionObserver(entries => {
+entries.forEach(entry => {
+if(entry.isIntersecting){
+entry.target.style.opacity = 1;
+entry.target.style.transform = "translateY(0)";
 }
+});
+},{threshold:0.1});
+
+elements.forEach(el=>{
+el.style.opacity = 0;
+el.style.transform = "translateY(20px)";
+el.style.transition = "all 0.9s cubic-bezier(0.2,0.8,0.2,1)";
+observer.observe(el);
+});

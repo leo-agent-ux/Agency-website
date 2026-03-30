@@ -1,155 +1,118 @@
-const formEndpoint = "https://formspree.io/f/mlgoblln"; 
-// 👆 replace this
-
-let currentStep = 0;
-
-let formData = {
-type: "",
-features: [],
-budget: "",
-description: ""
-};
-
-const steps = [
-{
-title: "What type of website?",
-html: `
-<label><input type="radio" name="type" value="Business"> Business Website</label>
-<label><input type="radio" name="type" value="Ecommerce"> E-commerce</label>
-<label><input type="radio" name="type" value="Portfolio"> Portfolio</label>
-`
-},
-{
-title: "Select features",
-html: `
-<label><input type="checkbox" value="Booking"> Booking System</label>
-<label><input type="checkbox" value="Payments"> Payment System</label>
-<label><input type="checkbox" value="Dashboard"> Admin Dashboard</label>
-`
-},
-{
-title: "Budget range",
-html: `
-<select id="budget">
-<option>£500 - £1000</option>
-<option>£1000 - £3000</option>
-<option>£3000 - £10000+</option>
-</select>
-`
-},
-{
-title: "Project description",
-html: `
-<textarea id="desc" placeholder="Describe your idea..." rows="5"></textarea>
-`
-},
-{
-title: "Final summary",
-html: `
-<div id="summary"></div>
-<button class="btn" onclick="submitQuote()">Submit Request</button>
-`
-}
-];
-
-function renderStep(){
-document.getElementById("stepContent").innerHTML =
-`<h2>${steps[currentStep].title}</h2>` +
-steps[currentStep].html;
-
-updateProgress();
-
-if(currentStep === steps.length - 1){
-generateSummary();
-}
+// ===== GET ALL CHECKBOX VALUES =====
+function getCheckedValues() {
+  let checkboxes = document.querySelectorAll("input[type=checkbox]:checked");
+  let values = [];
+  checkboxes.forEach(cb => values.push(cb.value));
+  return values;
 }
 
-function updateProgress(){
-document.getElementById("progress").style.width =
-((currentStep)/(steps.length-1))*100 + "%";
-}
+// ===== MAIN SUMMARY FUNCTION =====
+function generateSummary() {
 
-function nextStep(){
-saveData();
-if(currentStep < steps.length - 1){
-currentStep++;
-renderStep();
-}
-}
+  // BASIC FIELDS
+  let business = document.querySelector("input[name='business']").value;
+  let industry = document.querySelector("input[name='industry']").value;
+  let goal = document.querySelector("input[name='goal']").value;
+  let website = document.querySelector("input[name='website']").value;
 
-function prevStep(){
-if(currentStep > 0){
-currentStep--;
-renderStep();
-}
-}
+  let type = document.getElementById("type").value;
+  let style = document.getElementById("style").value;
+  let animations = document.getElementById("animations").value;
 
-function saveData(){
+  let growth = document.getElementById("growth").value;
+  let timeline = document.getElementById("timeline").value;
+  let content = document.getElementById("content").value;
 
-// TYPE
-let type = document.querySelector('input[name="type"]:checked');
-if(type) formData.type = type.value;
+  let features = getCheckedValues();
 
-// FEATURES
-let features = [];
-document.querySelectorAll('input[type="checkbox"]:checked')
-.forEach(f => features.push(f.value));
-formData.features = features;
+  // ===== PRICE LOGIC =====
+  let price = 500;
 
-// BUDGET
-let budget = document.getElementById("budget");
-if(budget) formData.budget = budget.value;
+  // PROJECT TYPE
+  if (type === "Business Website") price += 500;
+  if (type === "E-commerce") price += 2000;
+  if (type === "Booking System") price += 1500;
+  if (type === "SaaS") price += 3000;
+  if (type === "Portfolio") price += 300;
+  if (type === "Landing Page") price += 200;
 
-// DESCRIPTION
-let desc = document.getElementById("desc");
-if(desc) formData.description = desc.value;
-}
+  // DESIGN LEVEL
+  if (style === "Luxury & Premium") price += 700;
+  if (style === "Bold & Modern") price += 400;
 
-function generateSummary(){
-document.getElementById("summary").innerHTML = `
-<h3>Summary</h3>
-<p><b>Type:</b> ${formData.type}</p>
-<p><b>Features:</b> ${formData.features.join(", ")}</p>
-<p><b>Budget:</b> ${formData.budget}</p>
-<p><b>Description:</b> ${formData.description}</p>
+  // ANIMATIONS
+  if (animations.includes("High")) price += 1000;
+  if (animations.includes("Basic")) price += 300;
+
+  // FEATURES COST
+  features.forEach(f => {
+    if (f.includes("Payments")) price += 400;
+    if (f.includes("Booking")) price += 400;
+    if (f.includes("Dashboard")) price += 800;
+    if (f.includes("Login")) price += 600;
+    if (f.includes("CMS")) price += 500;
+    if (f.includes("SEO")) price += 300;
+    if (f.includes("Analytics")) price += 200;
+    if (f.includes("Automation")) price += 400;
+    if (f.includes("WhatsApp")) price += 200;
+    if (f.includes("Marketing")) price += 600;
+    if (f.includes("Branding")) price += 500;
+    if (f.includes("Logo")) price += 300;
+    if (f.includes("Hosting")) price += 200;
+    if (f.includes("Maintenance")) price += 300;
+  });
+
+  // CONTENT
+  if (content === "I need help") price += 300;
+  if (content === "I need full copywriting") price += 700;
+
+  // TIMELINE
+  if (timeline === "Rush") price += 800;
+
+  // ===== COMPLEXITY =====
+  let complexity = "LOW";
+
+  if (price > 2000) complexity = "MEDIUM";
+  if (price > 4000) complexity = "HIGH";
+
+  // ===== SUMMARY TEXT =====
+  let summary = `
+Business: ${business}
+Industry: ${industry}
+Goal: ${goal}
+
+Project Type: ${type}
+Style: ${style}
+Animations: ${animations}
+
+Features:
+${features.join(", ")}
+
+Growth Focus: ${growth}
+Timeline: ${timeline}
+Content: ${content}
+
+Existing Website: ${website || "None"}
 `;
+
+  // ===== DISPLAY =====
+  document.getElementById("summaryText").innerText = summary;
+
+  document.getElementById("priceEstimate").innerText =
+    "Estimated Price: £" + price + "+";
+
+  document.getElementById("complexity").innerText =
+    "Project Complexity: " + complexity;
+
+  // ===== SEND SUMMARY TO FORMSPREE =====
+  let hidden = document.getElementById("finalSummary");
+  if (!hidden) {
+    hidden = document.createElement("input");
+    hidden.type = "hidden";
+    hidden.name = "full_summary";
+    hidden.id = "finalSummary";
+    document.getElementById("quoteForm").appendChild(hidden);
+  }
+
+  hidden.value = summary + "\nPrice: £" + price + "+\nComplexity: " + complexity;
 }
-
-function calculatePrice(){
-let price = 0;
-
-if(formData.type === "Business") price += 500;
-if(formData.type === "Ecommerce") price += 1200;
-if(formData.type === "Portfolio") price += 300;
-
-formData.features.forEach(f=>{
-if(f === "Booking") price += 400;
-if(f === "Payments") price += 500;
-if(f === "Dashboard") price += 600;
-});
-
-return price;
-}
-
-function submitQuote(){
-
-saveData();
-
-let estimatedPrice = calculatePrice();
-
-fetch(formEndpoint, {
-method:"POST",
-headers:{ "Content-Type":"application/json" },
-body: JSON.stringify({
-type: formData.type,
-features: formData.features,
-budget: formData.budget,
-description: formData.description,
-estimatedPrice: "£" + estimatedPrice
-})
-});
-
-alert("Quote sent successfully. We will contact you soon.");
-}
-
-renderStep();

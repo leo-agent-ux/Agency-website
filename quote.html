@@ -8,23 +8,23 @@
 <body>
 
 <div class="nav">
-<div class="logo">StudioX</div>
-<div>
-<a href="index.html">Home</a>
-<a href="services.html">Services</a>
-<a href="portfolio.html">Work</a>
-<a href="pricing.html">Pricing</a>
-<a href="quote.html">Quote</a>
-<a href="contact.html">Contact</a>
-</div>
+  <div class="logo">StudioX</div>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="services.html">Services</a>
+    <a href="portfolio.html">Work</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="quote.html">Quote</a>
+    <a href="contact.html">Contact</a>
+  </div>
 </div>
 
 <div class="container">
 
 <h1>Project Builder</h1>
-<p>Build your project step-by-step. This helps us create a precise proposal.</p>
+<p>Build your project step-by-step. This creates a precise agency-level proposal.</p>
 
-<form id="quoteForm" action="https://formspree.io/f/mlgoblln" method="POST">
+<form id="quoteForm">
 
 <!-- STEP 1 -->
 <div class="card">
@@ -39,7 +39,7 @@
 <!-- STEP 2 -->
 <div class="card">
 <h2>Step 2 — Website Type</h2>
-<select name="type" id="type">
+<select id="type">
 <option>Business Website</option>
 <option>E-commerce</option>
 <option>Booking System</option>
@@ -52,16 +52,17 @@
 <!-- STEP 3 -->
 <div class="card">
 <h2>Step 3 — Design Direction</h2>
-<select name="style" id="style">
+
+<select id="style">
 <option>Minimal & Clean</option>
 <option>Luxury & Premium</option>
 <option>Bold & Modern</option>
 <option>Corporate</option>
 </select>
 
-<input name="references" placeholder="Reference websites">
+<input id="references" placeholder="Reference websites">
 
-<select name="animations" id="animations">
+<select id="animations">
 <option>No animations</option>
 <option>Basic animations</option>
 <option>High-end smooth animations</option>
@@ -83,16 +84,16 @@
 <label><input type="checkbox" value="CMS"> CMS</label><br>
 
 <h3>Growth</h3>
-<label><input type="checkbox" value="SEO"> SEO Setup</label><br>
+<label><input type="checkbox" value="SEO Setup"> SEO Setup</label><br>
 <label><input type="checkbox" value="Analytics"> Analytics</label><br>
 <label><input type="checkbox" value="Email Automation"> Email Automation</label><br>
-<label><input type="checkbox" value="WhatsApp"> WhatsApp Integration</label><br>
+<label><input type="checkbox" value="WhatsApp Integration"> WhatsApp Integration</label><br>
 
 </div>
 
 <!-- STEP 5 -->
 <div class="card">
-<h2>Step 5 — Business Growth Goals</h2>
+<h2>Step 5 — Growth Goals</h2>
 
 <select id="growth">
 <option>Leads</option>
@@ -102,7 +103,7 @@
 </select>
 
 <input id="target" placeholder="Monthly target (optional)">
-<input id="urgency" placeholder="Urgency (e.g. ASAP / 1 month)">
+<input id="urgency" placeholder="Urgency (ASAP / 1 month)">
 </div>
 
 <!-- STEP 6 -->
@@ -122,9 +123,9 @@
 <h2>Step 7 — Timeline</h2>
 
 <select id="timeline">
-<option>Rush</option>
-<option>Standard</option>
 <option>Flexible</option>
+<option>Standard</option>
+<option>Rush</option>
 </select>
 
 </div>
@@ -136,9 +137,9 @@
 <label><input type="checkbox" value="SEO Package"> SEO Setup</label><br>
 <label><input type="checkbox" value="Branding Kit"> Branding Kit</label><br>
 <label><input type="checkbox" value="Logo Design"> Logo Design</label><br>
-<label><input type="checkbox" value="Hosting"> Hosting Setup</label><br>
-<label><input type="checkbox" value="Maintenance"> Maintenance Plan</label><br>
-<label><input type="checkbox" value="Marketing"> Marketing Strategy</label><br>
+<label><input type="checkbox" value="Hosting Setup"> Hosting Setup</label><br>
+<label><input type="checkbox" value="Maintenance Plan"> Maintenance Plan</label><br>
+<label><input type="checkbox" value="Marketing Strategy"> Marketing Strategy</label><br>
 
 </div>
 
@@ -146,12 +147,12 @@
 <div class="card">
 <h2>Step 9 — Summary</h2>
 
-<p id="summaryText">Your project summary will appear here.</p>
+<p id="summaryText"></p>
 <p id="priceEstimate"></p>
 <p id="complexity"></p>
 
 <button type="button" class="btn" onclick="generateSummary()">Generate Summary</button>
-<button type="submit" class="btn">Proceed to Submit</button>
+<button type="submit" class="btn">Submit Project</button>
 
 </div>
 

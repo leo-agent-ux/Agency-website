@@ -4,8 +4,6 @@
 --border:rgba(255,255,255,0.08);
 --text:#f5f5f7;
 --muted:#a1a1a6;
---accent:#ffffff;
---radius:18px;
 }
 
 *{
@@ -18,19 +16,16 @@ body{
 font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",Segoe UI,Roboto;
 background:var(--bg);
 color:var(--text);
-line-height:1.6;
 overflow-x:hidden;
 }
 
-/* NAV */
 .nav{
 position:sticky;
 top:0;
 display:flex;
 justify-content:space-between;
-align-items:center;
 padding:18px 28px;
-background:rgba(7,7,10,0.6);
+background:rgba(7,7,10,0.7);
 backdrop-filter:blur(20px);
 border-bottom:1px solid var(--border);
 z-index:1000;
@@ -44,7 +39,7 @@ letter-spacing:-0.5px;
 .nav a{
 color:white;
 text-decoration:none;
-margin-left:14px;
+margin-left:16px;
 opacity:0.8;
 transition:0.3s;
 }
@@ -53,17 +48,15 @@ transition:0.3s;
 opacity:1;
 }
 
-/* LAYOUT */
 .container{
 max-width:1100px;
 margin:auto;
 padding:100px 24px;
 }
 
-/* HERO */
 .hero{
 text-align:center;
-padding:140px 24px 80px;
+padding:140px 24px 60px;
 }
 
 .hero h1{
@@ -79,17 +72,15 @@ margin:20px auto;
 font-size:18px;
 }
 
-/* BUTTON */
 .btn{
 display:inline-block;
 padding:14px 22px;
 border-radius:999px;
 background:white;
 color:black;
-font-weight:500;
 text-decoration:none;
-transition:0.3s ease;
-margin-top:20px;
+font-weight:500;
+transition:0.3s;
 }
 
 .btn:hover{
@@ -97,44 +88,42 @@ transform:translateY(-4px);
 opacity:0.9;
 }
 
-/* GRID */
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 gap:20px;
 }
 
-/* CARD */
 .card{
 background:var(--panel);
 border:1px solid var(--border);
-border-radius:var(--radius);
+border-radius:18px;
 padding:24px;
-transition:0.35s cubic-bezier(0.2,0.8,0.2,1);
+transition:0.35s;
 }
 
 .card:hover{
 transform:translateY(-10px);
-border-color:rgba(255,255,255,0.2);
 box-shadow:0 30px 80px rgba(0,0,0,0.6);
+border-color:rgba(255,255,255,0.2);
 }
 
-h1,h2,h3{
+h1,h2{
 letter-spacing:-1px;
 }
 
 p{
 color:var(--muted);
+line-height:1.6;
 }
 
-/* FORM */
-input, textarea, select{
+input,textarea,select{
 width:100%;
 padding:12px;
 margin-top:10px;
-background:transparent;
-border:1px solid var(--border);
 border-radius:12px;
+border:1px solid var(--border);
+background:transparent;
 color:white;
 outline:none;
 }
@@ -142,21 +131,11 @@ outline:none;
 label{
 display:block;
 margin-top:12px;
-color:var(--text);
-font-size:14px;
 }
 
-/* FOOTER */
 .footer{
 text-align:center;
 padding:50px;
 color:var(--muted);
 opacity:0.7;
-}
-
-/* ANIMATION BASE */
-.fade{
-opacity:0;
-transform:translateY(20px);
-transition:1s cubic-bezier(0.2,0.8,0.2,1);
 }

@@ -1,4 +1,4 @@
-// ===== GET ALL CHECKBOX VALUES =====
+// ===== GET CHECKBOX VALUES =====
 function getCheckedValues() {
   let checkboxes = document.querySelectorAll("input[type=checkbox]:checked");
   let values = [];
@@ -6,45 +6,32 @@ function getCheckedValues() {
   return values;
 }
 
-// ===== MAIN SUMMARY FUNCTION =====
-function generateSummary() {
+// ===== PRICE ENGINE (AGENCY VERSION) =====
+function calculatePrice(type, style, animations, features, content, timeline) {
 
-  // BASIC FIELDS
-  let business = document.querySelector("input[name='business']").value;
-  let industry = document.querySelector("input[name='industry']").value;
-  let goal = document.querySelector("input[name='goal']").value;
-  let website = document.querySelector("input[name='website']").value;
-
-  let type = document.getElementById("type").value;
-  let style = document.getElementById("style").value;
-  let animations = document.getElementById("animations").value;
-
-  let growth = document.getElementById("growth").value;
-  let timeline = document.getElementById("timeline").value;
-  let content = document.getElementById("content").value;
-
-  let features = getCheckedValues();
-
-  // ===== PRICE LOGIC =====
   let price = 500;
 
-  // PROJECT TYPE
-  if (type === "Business Website") price += 500;
-  if (type === "E-commerce") price += 2000;
-  if (type === "Booking System") price += 1500;
-  if (type === "SaaS") price += 3000;
-  if (type === "Portfolio") price += 300;
-  if (type === "Landing Page") price += 200;
+  // TYPE
+  const typePrices = {
+    "Business Website": 500,
+    "E-commerce": 2000,
+    "Booking System": 1500,
+    "SaaS": 3000,
+    "Portfolio": 300,
+    "Landing Page": 200
+  };
 
-  // DESIGN LEVEL
+  price += typePrices[type] || 0;
+
+  // STYLE
   if (style === "Luxury & Premium") price += 700;
   if (style === "Bold & Modern") price += 400;
 
   // ANIMATIONS
-  if (animations.includes("High")) price += 1000;
-  if (animations.includes("Basic")) price += 300;
+  if (animations === "Basic animations") price += 300;
+  if (animations === "High-end smooth animations") price += 1000;
 
-  // FEATURES COST
+  // FEATURES
   features.forEach(f => {
     if (f.includes("Payments")) price += 400;
     if (f.includes("Booking")) price += 400;
@@ -69,43 +56,57 @@ function generateSummary() {
   // TIMELINE
   if (timeline === "Rush") price += 800;
 
-  // ===== COMPLEXITY =====
-  let complexity = "LOW";
+  return price;
+}
 
+// ===== MAIN FUNCTION =====
+function generateSummary() {
+
+  let business = document.querySelector("input[name='business']").value;
+  let industry = document.querySelector("input[name='industry']").value;
+  let goal = document.querySelector("input[name='goal']").value;
+  let website = document.querySelector("input[name='website']").value;
+
+  let type = document.getElementById("type").value;
+  let style = document.getElementById("style").value;
+  let animations = document.getElementById("animations").value;
+  let growth = document.getElementById("growth").value;
+  let timeline = document.getElementById("timeline").value;
+  let content = document.getElementById("content").value;
+
+  let features = getCheckedValues();
+
+  let price = calculatePrice(type, style, animations, features, content, timeline);
+
+  let complexity = "LOW";
   if (price > 2000) complexity = "MEDIUM";
   if (price > 4000) complexity = "HIGH";
 
-  // ===== SUMMARY TEXT =====
   let summary = `
 Business: ${business}
 Industry: ${industry}
 Goal: ${goal}
 
-Project Type: ${type}
+Type: ${type}
 Style: ${style}
 Animations: ${animations}
 
-Features:
-${features.join(", ")}
+Features: ${features.join(", ")}
 
-Growth Focus: ${growth}
+Growth: ${growth}
 Timeline: ${timeline}
 Content: ${content}
 
-Existing Website: ${website || "None"}
+Website: ${website || "None"}
 `;
 
-  // ===== DISPLAY =====
   document.getElementById("summaryText").innerText = summary;
+  document.getElementById("priceEstimate").innerText = "Estimated Price: £" + price + "+";
+  document.getElementById("complexity").innerText = "Complexity: " + complexity;
 
-  document.getElementById("priceEstimate").innerText =
-    "Estimated Price: £" + price + "+";
-
-  document.getElementById("complexity").innerText =
-    "Project Complexity: " + complexity;
-
-  // ===== SEND SUMMARY TO FORMSPREE =====
+  // hidden field for Formspree
   let hidden = document.getElementById("finalSummary");
+
   if (!hidden) {
     hidden = document.createElement("input");
     hidden.type = "hidden";
@@ -114,5 +115,8 @@ Existing Website: ${website || "None"}
     document.getElementById("quoteForm").appendChild(hidden);
   }
 
-  hidden.value = summary + "\nPrice: £" + price + "+\nComplexity: " + complexity;
+  hidden.value =
+    summary +
+    "\nPrice: £" + price +
+    "\nComplexity: " + complexity;
 }

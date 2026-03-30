@@ -2,7 +2,9 @@
 <html>
 <head>
 <link rel="stylesheet" href="style.css">
+<title>Quote</title>
 </head>
+
 <body>
 
 <div class="nav">
@@ -10,31 +12,37 @@
   <div>
     <a href="index.html">Home</a>
     <a href="services.html">Services</a>
-    <a href="pricing.html">Pricing</a>
     <a href="portfolio.html">Work</a>
+    <a href="pricing.html">Pricing</a>
     <a href="contact.html">Contact</a>
   </div>
 </div>
 
 <section class="container">
-<h1>Build Your Quote</h1>
 
-<div class="card">
+<h1>Project Quote</h1>
+<p>Answer a few steps and we’ll build your estimate.</p>
 
-<label>Business Type</label>
-<input placeholder="e.g Barber shop">
+<!-- PROGRESS BAR -->
+<div style="margin:30px 0;">
+  <div style="height:6px;background:#222;border-radius:99px;overflow:hidden;">
+    <div id="progress" style="height:100%;width:0;background:white;transition:0.4s;"></div>
+  </div>
+</div>
 
-<label>Features Needed</label>
-<textarea placeholder="Booking system, payments, admin panel..."></textarea>
+<!-- STEP BOX -->
+<div class="card" id="stepBox">
 
-<label>Budget</label>
-<select>
-<option>£500 - £1000</option>
-<option>£1000 - £3000</option>
-<option>£3000 - £10000+</option>
-</select>
+  <!-- STEP CONTENT -->
+  <div id="stepContent"></div>
+
+  <div style="display:flex;justify-content:space-between;margin-top:20px;">
+    <button class="btn" onclick="prevStep()" style="background:#333;color:white;">Back</button>
+    <button class="btn" onclick="nextStep()">Next</button>
+  </div>
 
 </div>
+
 </section>
 
 <script src="script.js"></script>

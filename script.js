@@ -1,17 +1,16 @@
-// ===== GET CHECKBOX VALUES =====
+// ===== GET FEATURES =====
 function getCheckedValues() {
-  let checkboxes = document.querySelectorAll("input[type=checkbox]:checked");
+  let checkboxes = document.querySelectorAll("input[name='features']:checked");
   let values = [];
   checkboxes.forEach(cb => values.push(cb.value));
   return values;
 }
 
-// ===== PRICE ENGINE (AGENCY VERSION) =====
+// ===== PRICE ENGINE =====
 function calculatePrice(type, style, animations, features, content, timeline) {
 
   let price = 500;
 
-  // TYPE
   const typePrices = {
     "Business Website": 500,
     "E-commerce": 2000,
@@ -23,15 +22,12 @@ function calculatePrice(type, style, animations, features, content, timeline) {
 
   price += typePrices[type] || 0;
 
-  // STYLE
   if (style === "Luxury & Premium") price += 700;
   if (style === "Bold & Modern") price += 400;
 
-  // ANIMATIONS
   if (animations === "Basic animations") price += 300;
   if (animations === "High-end smooth animations") price += 1000;
 
-  // FEATURES
   features.forEach(f => {
     if (f.includes("Payments")) price += 400;
     if (f.includes("Booking")) price += 400;
@@ -42,18 +38,11 @@ function calculatePrice(type, style, animations, features, content, timeline) {
     if (f.includes("Analytics")) price += 200;
     if (f.includes("Automation")) price += 400;
     if (f.includes("WhatsApp")) price += 200;
-    if (f.includes("Marketing")) price += 600;
-    if (f.includes("Branding")) price += 500;
-    if (f.includes("Logo")) price += 300;
-    if (f.includes("Hosting")) price += 200;
-    if (f.includes("Maintenance")) price += 300;
   });
 
-  // CONTENT
   if (content === "I need help") price += 300;
   if (content === "I need full copywriting") price += 700;
 
-  // TIMELINE
   if (timeline === "Rush") price += 800;
 
   return price;
@@ -104,7 +93,6 @@ Website: ${website || "None"}
   document.getElementById("priceEstimate").innerText = "Estimated Price: £" + price + "+";
   document.getElementById("complexity").innerText = "Complexity: " + complexity;
 
-  // hidden field for Formspree
   let hidden = document.getElementById("finalSummary");
 
   if (!hidden) {

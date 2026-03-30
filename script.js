@@ -1,4 +1,4 @@
-const elements = document.querySelectorAll(".card, h1, h2, p, .btn");
+const elements = document.querySelectorAll("h1, h2, p, .card, .btn");
 
 const observer = new IntersectionObserver(entries => {
 entries.forEach(entry => {

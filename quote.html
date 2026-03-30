@@ -2,48 +2,64 @@
 <html>
 <head>
 <link rel="stylesheet" href="style.css">
-<title>Quote</title>
 </head>
-
 <body>
 
 <div class="nav">
-  <div class="logo">StudioX</div>
-  <div>
-    <a href="index.html">Home</a>
-    <a href="services.html">Services</a>
-    <a href="portfolio.html">Work</a>
-    <a href="pricing.html">Pricing</a>
-    <a href="contact.html">Contact</a>
-  </div>
+<div class="logo">StudioX</div>
+<div>
+<a href="index.html">Home</a>
+<a href="services.html">Services</a>
+<a href="portfolio.html">Work</a>
+<a href="pricing.html">Pricing</a>
+<a href="quote.html">Quote</a>
+<a href="contact.html">Contact</a>
+</div>
 </div>
 
-<section class="container">
+<div class="container">
 
 <h1>Project Quote</h1>
-<p>Answer a few steps and we’ll build your estimate.</p>
+<p>Tell us about your project — we only take serious builds.</p>
 
-<!-- PROGRESS BAR -->
-<div style="margin:30px 0;">
-  <div style="height:6px;background:#222;border-radius:99px;overflow:hidden;">
-    <div id="progress" style="height:100%;width:0;background:white;transition:0.4s;"></div>
-  </div>
+<form action="https://formspree.io/f/mlgoblln" method="POST">
+
+<div class="card">
+<h2>Business Info</h2>
+<input name="business" placeholder="Business Name" required>
+<input name="industry" placeholder="Industry">
+<input name="email" placeholder="Email" required>
 </div>
 
-<!-- STEP BOX -->
-<div class="card" id="stepBox">
+<div class="card">
+<h2>Project Type</h2>
+<select name="type">
+<option>Business Website</option>
+<option>E-commerce</option>
+<option>Booking System</option>
+<option>SaaS</option>
+</select>
+</div>
 
-  <!-- STEP CONTENT -->
-  <div id="stepContent"></div>
+<div class="card">
+<h2>Goals</h2>
+<select name="goal">
+<option>More leads</option>
+<option>More sales</option>
+<option>Brand upgrade</option>
+</select>
+</div>
 
-  <div style="display:flex;justify-content:space-between;margin-top:20px;">
-    <button class="btn" onclick="submitQuote()">Submit Request</button>
-  </div>
+<div class="card">
+<h2>Details</h2>
+<textarea name="details" rows="6"></textarea>
+</div>
+
+<button class="btn">Submit Request</button>
+
+</form>
 
 </div>
 
-</section>
-
-<script src="script.js"></script>
 </body>
 </html>

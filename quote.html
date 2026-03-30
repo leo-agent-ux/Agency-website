@@ -1,139 +1,298 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Build Your Website</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Experience</title>
+
+<style>
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
+  background: radial-gradient(circle at top,#141428,#07070c);
+  color:white;
+  overflow:hidden;
+}
+
+/* top progress */
+.progress{
+  position:fixed;
+  top:0;
+  left:0;
+  height:3px;
+  width:0%;
+  background:linear-gradient(90deg,#fff,#888);
+  transition:0.5s;
+}
+
+/* center layout */
+.center{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+/* luxury card */
+.card{
+  width:100%;
+  max-width:560px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.1);
+  backdrop-filter:blur(18px);
+  border-radius:24px;
+  padding:30px;
+  box-shadow:0 30px 80px rgba(0,0,0,0.6);
+  transition:0.4s ease;
+}
+
+/* text */
+h1{font-size:22px;margin-bottom:6px;}
+p{color:#aaa;font-size:14px;}
+
+/* cards grid */
+.grid{
+  display:grid;
+  gap:12px;
+  margin-top:18px;
+}
+
+.option{
+  padding:16px;
+  border-radius:16px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.option:hover{
+  transform:scale(1.02);
+  border-color:rgba(255,255,255,0.3);
+}
+
+.option.active{
+  border-color:white;
+  background:rgba(255,255,255,0.1);
+}
+
+/* button */
+button{
+  width:100%;
+  margin-top:20px;
+  padding:14px;
+  border-radius:14px;
+  border:none;
+  background:white;
+  color:black;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.2s;
+}
+button:hover{transform:scale(1.02);}
+
+/* fade animation */
+.fade{
+  animation:fade 0.25s ease;
+}
+@keyframes fade{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:translateY(0);}
+}
+</style>
 </head>
 
 <body>
 
-<nav>
-  <a href="index.html">Home</a>
-  <a href="services.html">Services</a>
-  <a href="pricing.html">Pricing</a>
-  <a href="quote.html">Quote</a>
-</nav>
+<div class="progress" id="progress"></div>
 
-<div class="container">
+<div class="center">
+<div class="card fade" id="card">
 
-  <h1 style="font-size:34px; font-weight:500;">Build your website</h1>
-  <p style="color:#a1a1aa;">Step-by-step estimate builder</p>
+<h1 id="title">Let’s design your website experience</h1>
+<p id="desc">A guided process to understand your business properly.</p>
 
-  <!-- PROGRESS -->
-  <div style="height:6px; background:#1f1f2a; border-radius:999px; margin:25px 0;">
-    <div id="progress" style="height:6px; width:25%; background:white; border-radius:999px;"></div>
-  </div>
+<div id="content"></div>
 
-  <!-- STEP BOX -->
-  <div class="card" id="stepBox">
+<button onclick="next()">Continue</button>
 
-    <h2 id="stepTitle">Step 1 — Website Type</h2>
-    <p id="stepDesc">Choose the type of website you want</p>
-
-    <div id="stepContent"></div>
-
-    <button class="btn" onclick="nextStep()" style="margin-top:15px;">
-      Next
-    </button>
-
-  </div>
-
-  <h2 id="result" style="margin-top:20px;"></h2>
-
+</div>
 </div>
 
 <script>
-let step = 1;
+let step=0;
+let data={};
 
-let values = {
-  type: 0,
-  features: 0,
-  extras: 0
-};
+let selected=null;
 
-function renderStep() {
-  let content = document.getElementById("stepContent");
-  let title = document.getElementById("stepTitle");
-  let desc = document.getElementById("stepDesc");
-  let progress = document.getElementById("progress");
+function render(){
 
-  if (step === 1) {
-    title.innerText = "Step 1 — Website Type";
-    desc.innerText = "Choose your main website type";
+let content=document.getElementById("content");
+let title=document.getElementById("title");
+let desc=document.getElementById("desc");
+let progress=document.getElementById("progress");
+let card=document.getElementById("card");
 
-    content.innerHTML = `
-      <select id="typeSelect">
-        <option value="80">Business Website</option>
-        <option value="120">Booking Website</option>
-        <option value="60">Landing Page</option>
-      </select>
-    `;
+card.classList.remove("fade");
+void card.offsetWidth;
+card.classList.add("fade");
 
-    progress.style.width = "33%";
-  }
+selected=null;
 
-  if (step === 2) {
-    title.innerText = "Step 2 — Features";
-    desc.innerText = "What features do you need?";
+if(step===0){
+title.innerText="What best describes your business?";
+desc.innerText="Choose one";
 
-    content.innerHTML = `
-      <select id="featureSelect">
-        <option value="0">Basic</option>
-        <option value="25">Contact Form</option>
-        <option value="45">WhatsApp + Contact</option>
-      </select>
-    `;
-
-    progress.style.width = "66%";
-  }
-
-  if (step === 3) {
-    title.innerText = "Step 3 — Extras";
-    desc.innerText = "Optional upgrades";
-
-    content.innerHTML = `
-      <select id="extraSelect">
-        <option value="0">None</option>
-        <option value="30">SEO Setup</option>
-        <option value="60">Full Branding</option>
-      </select>
-    `;
-
-    progress.style.width = "100%";
-  }
-
-  if (step === 4) {
-    document.getElementById("stepBox").style.display = "none";
-
-    let total =
-      values.type + values.features + values.extras;
-
-    document.getElementById("result").innerHTML =
-      "Estimated Project Cost: £" + total + 
-      "<br><br><button class='btn'>Request This Website</button>";
-  }
+content.innerHTML=`
+<div class="grid">
+<div class="option" onclick="select(this,'Barber')">🪒 Barber / Salon</div>
+<div class="option" onclick="select(this,'Restaurant')">🍽 Restaurant</div>
+<div class="option" onclick="select(this,'Fitness')">🏋 Fitness / Gym</div>
+<div class="option" onclick="select(this,'Local')">🛠 Local Business</div>
+</div>
+`;
+progress.style.width="15%";
 }
 
-function nextStep() {
+if(step===1){
+title.innerText="What is your main goal?";
+desc.innerText="What should your website achieve?";
 
-  if (step === 1) {
-    values.type = +document.getElementById("typeSelect").value;
-  }
-
-  if (step === 2) {
-    values.features = +document.getElementById("featureSelect").value;
-  }
-
-  if (step === 3) {
-    values.extras = +document.getElementById("extraSelect").value;
-  }
-
-  step++;
-  renderStep();
+content.innerHTML=`
+<div class="grid">
+<div class="option" onclick="select(this,'Customers')">Get more customers</div>
+<div class="option" onclick="select(this,'Bookings')">Take bookings</div>
+<div class="option" onclick="select(this,'Trust')">Build trust</div>
+<div class="option" onclick="select(this,'Sell')">Sell products</div>
+</div>
+`;
+progress.style.width="30%";
 }
 
-renderStep();
+if(step===2){
+title.innerText="How should it feel?";
+desc.innerText="Design style preference";
+
+content.innerHTML=`
+<div class="grid">
+<div class="option" onclick="select(this,'Clean')">Minimal & Clean</div>
+<div class="option" onclick="select(this,'Modern')">Modern Business</div>
+<div class="option" onclick="select(this,'Premium')">Premium Studio</div>
+<div class="option" onclick="select(this,'Luxury')">Ultra Luxury</div>
+</div>
+`;
+progress.style.width="50%";
+}
+
+if(step===3){
+title.innerText="Which features do you need?";
+desc.innerText="Select what matters";
+
+content.innerHTML=`
+<div class="grid">
+<div class="option" onclick="toggle(this,'Booking')">📅 Booking System</div>
+<div class="option" onclick="toggle(this,'WhatsApp')">💬 WhatsApp Chat</div>
+<div class="option" onclick="toggle(this,'SEO')">📊 SEO Setup</div>
+<div class="option" onclick="toggle(this,'Contact')">📩 Contact Form</div>
+</div>
+`;
+progress.style.width="70%";
+}
+
+if(step===4){
+title.innerText="Tell us about your business";
+desc.innerText="Explain in your own words";
+
+content.innerHTML=`
+<textarea id="msg" rows="5" style="
+width:100%;
+margin-top:15px;
+padding:14px;
+border-radius:14px;
+border:none;
+background:rgba(255,255,255,0.08);
+color:white;
+"></textarea>
+`;
+progress.style.width="85%";
+}
+
+if(step===5){
+title.innerText="Almost done";
+desc.innerText="Your details";
+
+content.innerHTML=`
+<input id="name" placeholder="Your name">
+<input id="email" placeholder="Your email">
+`;
+progress.style.width="95%";
+}
+
+if(step===6){
+submit();
+}
+}
+
+function select(el,value){
+document.querySelectorAll(".option").forEach(o=>o.classList.remove("active"));
+el.classList.add("active");
+selected=value;
+}
+
+let features=[];
+
+function toggle(el,value){
+el.classList.toggle("active");
+
+if(features.includes(value)){
+features=features.filter(f=>f!==value);
+}else{
+features.push(value);
+}
+}
+
+function next(){
+
+if(step===0||step===1||step===2){
+data[step]=selected;
+}
+
+if(step===3){
+data.features=features;
+}
+
+if(step===4){
+data.message=document.getElementById("msg").value;
+}
+
+if(step===5){
+data.name=document.getElementById("name").value;
+data.email=document.getElementById("email").value;
+}
+
+step++;
+render();
+}
+
+function submit(){
+
+document.getElementById("card").innerHTML=`
+<h1>Designing your experience...</h1>
+<p>Please wait while we prepare your project.</p>
+`;
+
+console.log("FINAL DATA",data);
+
+setTimeout(()=>{
+document.getElementById("card").innerHTML=`
+<h1>Request complete 🚀</h1>
+<p>Your website brief has been created.</p>
+`;
+},2000);
+
+}
+
+render();
 </script>
 
 </body>

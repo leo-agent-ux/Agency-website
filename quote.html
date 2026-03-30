@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Build Your Website</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="services.html">Services</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="quote.html">Build Quote</a>
+  <a href="portfolio.html">Portfolio</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<div class="container">
+
+  <h1>Build Your Website Package</h1>
+
+  <div class="card">
+
+    <label>Website Type</label>
+    <select id="type">
+      <option value="30">Basic Website</option>
+      <option value="60">Business Website</option>
+      <option value="90">Booking Website</option>
+    </select>
+
+    <label>Domain</label>
+    <select id="domain">
+      <option value="0">No Domain</option>
+      <option value="10">Custom Domain</option>
+    </select>
+
+    <label>Extras</label>
+    <select id="extras">
+      <option value="0">None</option>
+      <option value="20">Logo Design</option>
+      <option value="30">SEO Setup</option>
+    </select>
+
+    <button class="btn" onclick="calculate()">Get Estimate</button>
+
+    <h2 id="result"></h2>
+
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -1,4 +1,24 @@
-// ===== GET FEATURES =====
+// =====================
+// FIREBASE SETUP
+// =====================
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// =====================
+// GET FEATURES
+// =====================
 function getCheckedValues() {
   let checkboxes = document.querySelectorAll("input[name='features']:checked");
   let values = [];
@@ -6,7 +26,9 @@ function getCheckedValues() {
   return values;
 }
 
-// ===== PRICE ENGINE =====
+// =====================
+// PRICE ENGINE
+// =====================
 function calculatePrice(type, style, animations, features, content, timeline) {
 
   let price = 500;
@@ -38,6 +60,11 @@ function calculatePrice(type, style, animations, features, content, timeline) {
     if (f.includes("Analytics")) price += 200;
     if (f.includes("Automation")) price += 400;
     if (f.includes("WhatsApp")) price += 200;
+    if (f.includes("Marketing")) price += 600;
+    if (f.includes("Branding")) price += 500;
+    if (f.includes("Logo")) price += 300;
+    if (f.includes("Hosting")) price += 200;
+    if (f.includes("Maintenance")) price += 300;
   });
 
   if (content === "I need help") price += 300;
@@ -48,7 +75,9 @@ function calculatePrice(type, style, animations, features, content, timeline) {
   return price;
 }
 
-// ===== MAIN FUNCTION =====
+// =====================
+// GENERATE SUMMARY
+// =====================
 function generateSummary() {
 
   let business = document.querySelector("input[name='business']").value;
@@ -71,8 +100,8 @@ function generateSummary() {
   if (price > 2000) complexity = "MEDIUM";
   if (price > 4000) complexity = "HIGH";
 
-  let summary = `
-Business: ${business}
+  let summary =
+`Business: ${business}
 Industry: ${industry}
 Goal: ${goal}
 
@@ -86,25 +115,67 @@ Growth: ${growth}
 Timeline: ${timeline}
 Content: ${content}
 
-Website: ${website || "None"}
-`;
+Website: ${website || "None"}`;
 
   document.getElementById("summaryText").innerText = summary;
   document.getElementById("priceEstimate").innerText = "Estimated Price: £" + price + "+";
   document.getElementById("complexity").innerText = "Complexity: " + complexity;
-
-  let hidden = document.getElementById("finalSummary");
-
-  if (!hidden) {
-    hidden = document.createElement("input");
-    hidden.type = "hidden";
-    hidden.name = "full_summary";
-    hidden.id = "finalSummary";
-    document.getElementById("quoteForm").appendChild(hidden);
-  }
-
-  hidden.value =
-    summary +
-    "\nPrice: £" + price +
-    "\nComplexity: " + complexity;
 }
+
+// =====================
+// SUBMIT TO FIREBASE
+// =====================
+document.getElementById("quoteForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  let business = document.querySelector("input[name='business']").value;
+  let industry = document.querySelector("input[name='industry']").value;
+  let goal = document.querySelector("input[name='goal']").value;
+  let website = document.querySelector("input[name='website']").value;
+
+  let type = document.getElementById("type").value;
+  let style = document.getElementById("style").value;
+  let animations = document.getElementById("animations").value;
+  let growth = document.getElementById("growth").value;
+  let timeline = document.getElementById("timeline").value;
+  let content = document.getElementById("content").value;
+
+  let features = getCheckedValues();
+
+  let price = calculatePrice(type, style, animations, features, content, timeline);
+
+  let complexity = "LOW";
+  if (price > 2000) complexity = "MEDIUM";
+  if (price > 4000) complexity = "HIGH";
+
+  try {
+    await addDoc(collection(db, "leads"), {
+      business,
+      industry,
+      goal,
+      website,
+      type,
+      style,
+      animations,
+      growth,
+      timeline,
+      content,
+      features,
+      priceEstimate: price,
+      complexity,
+      status: "new",
+      createdAt: serverTimestamp()
+    });
+
+    alert("Project submitted successfully 🚀");
+
+    document.getElementById("quoteForm").reset();
+
+  } catch (error) {
+    console.error("Firebase error:", error);
+    alert("Error saving project");
+  }
+});
+
+// expose function for button
+window.generateSummary = generateSummary;

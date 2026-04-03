@@ -5,14 +5,13 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyCgFpLoDBZ-JxOXyaMJNxB_rbCoa91jSPA",
+  authDomain: "studiox-b6f70.firebaseapp.com",
+  projectId: "studiox-b6f70",
+  storageBucket: "studiox-b6f70.firebasestorage.app",
+  messagingSenderId: "181987957314",
+  appId: "1:181987957314:web:2e35d718a1aa80b6946bdb"
 };
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
